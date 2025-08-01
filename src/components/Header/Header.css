@@ -10,17 +10,17 @@
 
 .header__date-and-location {
   margin: 0;
-  font-weight: 700; /* bold like the spec */
+  font-weight: 700;
 }
 
 .header__add-clothes-btn {
-  margin: 0 20px 0 auto; /* keeps it pushed to the right */
-  background: transparent; /* no gray fill */
-  border: none; /* no border */
-  padding: 0; /* no inner spacing */
-  font: inherit; /* use the header font */
-  font-weight: 700; /* bold like the spec */
-  color: #000; /* black text */
+  margin: 0 20px 0 auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: #000;
   cursor: pointer;
 }
 
@@ -32,5 +32,5 @@
 
 .header__username {
   margin: 0;
-  font-weight: 700; /* bold like the spec */
+  font-weight: 700;
 }
