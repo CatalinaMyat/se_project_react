@@ -44,16 +44,17 @@
 .modal__caption {
   margin: 0 0 6px 0;
   font-weight: 700;
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 20px;
+  line-height: 24px;
   color: #000;
   font-family: "Cabinet Grotesk", sans-serif;
 }
 
 .modal__weather {
   margin: 0;
-  font-size: 12px;
-  line-height: 16px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
   color: rgba(0, 0, 0);
   font-family: "Cabinet Grotesk", sans-serif;
 }

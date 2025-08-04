@@ -22,7 +22,6 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
-  // Initialize clothing items in App state so they can be modified later
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
 
   const handleCardClick = (card) => {
@@ -44,7 +43,9 @@ function App() {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch weather data:", error);
+      });
   }, []);
 
   return (
@@ -61,7 +62,7 @@ function App() {
       <ModalWithForm
         title="New garment"
         buttonText="Add garment"
-        activeModal={activeModal}
+        isOpen={activeModal === "add-garment"}
         onClose={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
