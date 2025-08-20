@@ -53,6 +53,11 @@
   width: 100%;
 }
 
+.modal__content_type_form {
+  max-width: 440px;
+  padding: 28px 36px;
+}
+
 .modal__input {
   display: block;
   width: 100%;
@@ -90,10 +95,6 @@
   cursor: pointer;
   margin-top: 30px;
 }
-/* 
-.modal__submit:hover {
-    background-color: rgba(0, 0, 0);
-} */
 
 .modal__legend {
   margin: 24px 0 12px;

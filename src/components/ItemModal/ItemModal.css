@@ -39,6 +39,16 @@
   background: #fff;
   padding: 16px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .modal__caption {
@@ -57,4 +67,17 @@
   line-height: 24px;
   color: rgba(0, 0, 0);
   font-family: "Cabinet Grotesk", sans-serif;
+}
+
+.modal__delete-btn {
+  background: none;
+  border: none;
+  color: #ff4d00;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 58px;
+  font-family: "Cabinet Grotesk", sans-serif;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
 }
