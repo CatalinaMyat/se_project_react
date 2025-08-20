@@ -1,0 +1,29 @@
+.profile {
+  display: grid;
+  grid-template-columns: 256px 1fr;
+  column-gap: 24px;
+  align-items: start;
+}
+
+.profile__sidebar {
+  width: 256px;
+}
+
+.profile__clothing-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.clothes-section > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .profile__sidebar {
+    width: 100%;
+  }
+}

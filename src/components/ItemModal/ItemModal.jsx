@@ -1,7 +1,13 @@
 import "./ItemModal.css";
 import crossIcon from "../../assets/cross.png";
 
-function ItemModal({ activeModal, onClose, card }) {
+function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
+  if (!card) return null;
+
+  const handleDelete = () => {
+    onDeleteItem(card.id);
+  };
+
   return (
     <div
       className={`modal ${activeModal === "preview" ? "modal__opened" : ""}`}
@@ -14,6 +20,13 @@ function ItemModal({ activeModal, onClose, card }) {
         <div className="modal__footer">
           <h2 className="modal__caption">{card.name}</h2>
           <p className="modal__weather">Weather: {card.weather}</p>
+          <button
+            onClick={handleDelete}
+            className="modal__delete-btn"
+            type="button"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>

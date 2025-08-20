@@ -1,0 +1,39 @@
+.sidebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 12px;
+
+  position: sticky;
+  top: 24px;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.sidebar__username {
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #222;
+}
+
+.sidebar:hover {
+  border-color: #d6d6d6;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+  }
+}
