@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
-import { coordinates, APIkey } from "../../utils/constants";
+import { coordinates, apiKey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
@@ -60,15 +60,14 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
+    getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
       .catch((error) => {
         console.error("Failed to fetch weather data:", error);
-      })
-      .catch(console.error);
+      });
   }, []);
 
   useEffect(() => {
@@ -82,7 +81,7 @@ function App() {
         }));
         setClothingItems(normalized);
       })
-      .catch(console.error);
+      .catch(console.error); // single catch
   }, []);
 
   const handleDeleteItem = (id) => {
@@ -91,7 +90,7 @@ function App() {
         setClothingItems((prev) => prev.filter((i) => i.id !== id));
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error); // single catch
   };
 
   return (
@@ -101,9 +100,11 @@ function App() {
       <div className="page">
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+
+          {/* ✅ Paths updated to match Links ("/" and "/profile") */}
           <Routes>
             <Route
-              path="/se_project_react/"
+              path="/"
               element={
                 <Main
                   weatherData={weatherData}
@@ -113,12 +114,21 @@ function App() {
               }
             />
             <Route
-              path="se_project_react/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              path="/profile"
+              element={
+                <Profile
+                  handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
+                  clothingItems={clothingItems}
+                  weatherData={weatherData}
+                />
+              }
             />
           </Routes>
+
           <Footer />
         </div>
+
         <AddItemModal
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
