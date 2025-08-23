@@ -18,7 +18,6 @@ function Profile({
           handleCardClick={handleCardClick}
           handleAddClick={handleAddClick}
           clothingItems={clothingItems}
-          weatherData={weatherData}
         />
       </section>
     </div>

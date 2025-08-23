@@ -4,15 +4,8 @@ import "./ClothesSection.css";
 function ClothesSection({
   handleCardClick,
   handleAddClick,
-  weatherData,
   clothingItems = [],
 }) {
-  const type = weatherData?.type;
-
-  const items = type
-    ? clothingItems.filter((item) => item.weather === type)
-    : clothingItems;
-
   return (
     <div className="clothes-section">
       <div className="clothes-section__panel">
@@ -27,7 +20,7 @@ function ClothesSection({
       </div>
 
       <ul className="cards__list">
-        {items.map((item) => (
+        {clothingItems.map((item) => (
           <ItemCard
             key={item.id ?? item._id}
             item={item}

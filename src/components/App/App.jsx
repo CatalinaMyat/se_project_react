@@ -48,11 +48,12 @@ function App() {
     return addItem({ name, imageUrl, weather })
       .then((created) => {
         const normalized = {
-          id: created.id,
+          _id: created._id,
           name: created.name,
           link: created.imageUrl,
           weather: created.weather,
         };
+
         setClothingItems((prev) => [normalized, ...prev]);
         closeActiveModal();
       })
@@ -73,24 +74,21 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        const normalized = data.map(({ id, name, imageUrl, weather }) => ({
-          id,
+        const normalized = data.map(({ _id, name, imageUrl, weather }) => ({
+          _id,
           name,
           link: imageUrl,
           weather,
         }));
         setClothingItems(normalized);
       })
-      .catch(console.error); // single catch
+      .catch(console.error);
   }, []);
 
-  const handleDeleteItem = (id) => {
-    return deleteItem(id)
-      .then(() => {
-        setClothingItems((prev) => prev.filter((i) => i.id !== id));
-        closeActiveModal();
-      })
-      .catch(console.error); // single catch
+  const handleDeleteItem = (_id) => {
+    return deleteItem(_id).then(() =>
+      setClothingItems((prev) => prev.filter((i) => i._id !== _id))
+    );
   };
 
   return (
@@ -101,7 +99,6 @@ function App() {
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
 
-          {/* ✅ Paths updated to match Links ("/" and "/profile") */}
           <Routes>
             <Route
               path="/"
