@@ -86,9 +86,12 @@ function App() {
   }, []);
 
   const handleDeleteItem = (_id) => {
-    return deleteItem(_id).then(() =>
-      setClothingItems((prev) => prev.filter((i) => i._id !== _id))
-    );
+    return deleteItem(_id)
+      .then(() => {
+        setClothingItems((prev) => prev.filter((i) => i._id !== _id));
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   return (

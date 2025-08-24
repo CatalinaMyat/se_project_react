@@ -5,7 +5,7 @@ function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
   if (!card) return null;
 
   const handleDelete = () => {
-    onDeleteItem(card.id);
+    onDeleteItem(card._id);
   };
 
   return (
