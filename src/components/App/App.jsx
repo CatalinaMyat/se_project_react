@@ -271,15 +271,12 @@ function App() {
                     <Profile
                       currentUser={currentUser}
                       onEditProfile={handleEditProfileClick}
-                      onAddNew={handleAddClothesClick}
                       onLogout={handleSignOut}
-                    >
-                      <ClothesSection
-                        handleCardClick={handleCardClick}
-                        clothingItems={clothingItems}
-                        onCardLike={handleCardLike}
-                      />
-                    </Profile>
+                      onAddNew={() => setActiveModal("add-garment")}
+                      clothingItems={clothingItems} // pass items
+                      handleCardClick={handleCardClick} // pass opener for preview
+                      onCardLike={handleCardLike} // pass like handler
+                    />
                   </ProtectedRoute>
                 }
               />

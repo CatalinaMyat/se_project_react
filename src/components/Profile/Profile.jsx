@@ -1,13 +1,17 @@
+// src/components/Profile/Profile.jsx
 import React from "react";
 import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
+import ClothesSection from "../ClothesSection/ClothesSection"; // ← add this
 
 const Profile = ({
   currentUser,
   onEditProfile,
   onLogout,
   onAddNew,
-  children,
+  clothingItems, // ← add
+  handleCardClick, // ← add
+  onCardLike, // ← add
 }) => {
   return (
     <section className="profile">
@@ -29,8 +33,12 @@ const Profile = ({
             )}
           </div>
 
-          {/* clothes grid comes from children */}
-          {children}
+          {/* render ClothesSection here (not children) */}
+          <ClothesSection
+            handleCardClick={handleCardClick}
+            clothingItems={clothingItems}
+            onCardLike={onCardLike}
+          />
         </div>
       </div>
     </section>
