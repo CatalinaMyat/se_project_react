@@ -12,7 +12,7 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 
-import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -68,23 +68,20 @@ function App() {
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const [updateUserError, setUpdateUserError] = useState("");
 
-  // ===== Handlers (cards & modals) =====
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
   };
 
-  // Likes: toggle like/unlike for a card
-  // App.jsx (add this next to your other handlers)
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
-    const req = isLiked ? removeCardLike : addCardLike; // <— not api.*
+    const likeRequest = isLiked ? removeCardLike : addCardLike;
 
-    req(id, token)
-      .then((updated) => {
-        if (!updated || !updated._id) return; // defensive
+    likeRequest(id, token)
+      .then((updatedCard) => {
+        if (!updatedCard || !updatedCard._id) return;
         setClothingItems((prev) =>
-          prev.map((it) => (it._id === id ? updated : it))
+          prev.map((item) => (item._id === id ? updatedCard : item))
         );
       })
       .catch(console.error);
@@ -98,7 +95,6 @@ function App() {
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
     if (!token) {
-      // If the user isn't logged in, show the login modal instead of calling the API.
       setIsLoginOpen(true);
       return Promise.reject(new Error("Not authenticated"));
     }
@@ -108,8 +104,7 @@ function App() {
         const normalized = {
           _id: created._id,
           name: created.name,
-          link: created.imageUrl, // server returns imageUrl
-          weather: created.weather,
+          link: created.imageUrl,
           owner: created.owner,
         };
         setClothingItems((prev) => [normalized, ...prev]);
@@ -118,14 +113,12 @@ function App() {
       .catch(console.error);
   };
 
-  // In App.jsx
   const handleDeleteItem = (idFromModal) => {
     const id = idFromModal || selectedCard?._id;
     if (!id) return;
 
     const token = localStorage.getItem("jwt");
 
-    // call the named import you already have: deleteItem(id, token)
     return deleteItem(id, token)
       .then(() => {
         setClothingItems((items) => items.filter((i) => i._id !== id));
@@ -135,14 +128,12 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  // ===== Weather on load =====
   useEffect(() => {
     getWeather(coordinates, apiKey)
       .then((data) => setWeatherData(filterWeatherData(data)))
       .catch((e) => console.error("Failed to fetch weather data:", e));
   }, []);
 
-  // ===== Public items on load =====
   useEffect(() => {
     getItems()
       .then((data) => {
@@ -160,7 +151,6 @@ function App() {
       .catch(console.error);
   }, []);
 
-  // ===== Auth: register → login → get user =====
   function handleRegister({ name, avatar, email, password }) {
     setIsSubmitting(true);
     setAuthError("");
@@ -196,7 +186,6 @@ function App() {
       .finally(() => setIsSubmitting(false));
   }
 
-  // ===== Token check on page load =====
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) return;
@@ -212,7 +201,6 @@ function App() {
       });
   }, []);
 
-  // ===== Sign out =====
   function handleSignOut() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
@@ -222,7 +210,6 @@ function App() {
     setIsEditProfileOpen(false);
   }
 
-  // ===== Task 3: update profile (PATCH /users/me) =====
   function handleUpdateUser({ name, avatar }) {
     setIsUpdatingUser(true);
     setUpdateUserError("");
@@ -259,7 +246,7 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
-                    onCardLike={handleCardLike} // <-- add this
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -273,9 +260,9 @@ function App() {
                       onEditProfile={handleEditProfileClick}
                       onLogout={handleSignOut}
                       onAddNew={() => setActiveModal("add-garment")}
-                      clothingItems={clothingItems} // pass items
-                      handleCardClick={handleCardClick} // pass opener for preview
-                      onCardLike={handleCardLike} // pass like handler
+                      clothingItems={clothingItems}
+                      handleCardClick={handleCardClick}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
@@ -305,6 +292,8 @@ function App() {
             onSubmit={handleUpdateUser}
             isSubmitting={isUpdatingUser}
             errorText={updateUserError}
+            defaultName={currentUser?.name || ""}
+            defaultAvatar={currentUser?.avatar || ""}
           />
 
           <RegisterModal

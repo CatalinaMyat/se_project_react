@@ -7,12 +7,10 @@ function ItemCard({ item, onCardClick, onCardLike }) {
 
   const handleCardClick = () => onCardClick(item);
 
-  // likes is an array of user id strings
   const likedByMe =
     Array.isArray(item.likes) &&
     item.likes.some((id) => id === currentUser?._id);
 
-  // toggle like without opening the preview
   const handleLike = (e) => {
     e.stopPropagation();
     onCardLike?.({ id: item._id, isLiked: likedByMe });
@@ -22,13 +20,16 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     <li className="card">
       <div className="card__header">
         <h2 className="card__name">{item.name}</h2>
-        <button
-          type="button"
-          className={`card__like ${likedByMe ? "card__like--active" : ""}`}
-          aria-pressed={likedByMe}
-          aria-label={likedByMe ? "Unlike" : "Like"}
-          onClick={handleLike}
-        />
+
+        {currentUser && (
+          <button
+            type="button"
+            className={`card__like ${likedByMe ? "card__like--active" : ""}`}
+            aria-pressed={likedByMe}
+            aria-label={likedByMe ? "Unlike" : "Like"}
+            onClick={handleLike}
+          />
+        )}
       </div>
 
       <img

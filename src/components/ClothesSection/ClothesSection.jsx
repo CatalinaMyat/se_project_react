@@ -4,12 +4,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function ClothesSection({
-  handleCardClick,
-  handleAddClick, // unchanged
-  clothingItems = [],
-  onCardLike, // NEW
-}) {
+function ClothesSection({ handleCardClick, clothingItems = [], onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const { pathname } = useLocation();
 
@@ -23,7 +18,7 @@ function ClothesSection({
   return (
     <div className="clothes-section">
       <ul className="cards__list">
-        {clothingItems.map((item) => (
+        {visibleItems.map((item) => (
           <ItemCard
             key={item._id ?? item.id}
             item={item}

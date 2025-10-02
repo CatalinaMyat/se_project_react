@@ -21,7 +21,6 @@ export default function LoginModal({
 
   if (!isOpen) return null;
 
-  // ✅ Disable submit if submitting or fields are empty
   const isSubmitDisabled =
     isSubmitting || email.trim().length === 0 || password.trim().length === 0;
 
