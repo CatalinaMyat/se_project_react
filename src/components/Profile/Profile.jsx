@@ -1,27 +1,40 @@
-import ClothesSection from "../ClothesSection/ClothesSection";
-import SideBar from "../SideBar/SideBar";
+import React from "react";
 import "./Profile.css";
+import SideBar from "../SideBar/SideBar";
 
-function Profile({
-  handleCardClick,
-  handleAddClick,
-  clothingItems,
-  weatherData,
-}) {
+const Profile = ({
+  currentUser,
+  onEditProfile,
+  onLogout,
+  onAddNew,
+  children,
+}) => {
   return (
-    <div className="profile">
-      <section className="profile__sidebar">
-        <SideBar />
-      </section>
-      <section className="profile__clothing-items">
-        <ClothesSection
-          handleCardClick={handleCardClick}
-          handleAddClick={handleAddClick}
-          clothingItems={clothingItems}
+    <section className="profile">
+      <div className="profile__grid">
+        <SideBar
+          name={currentUser?.name}
+          avatar={currentUser?.avatar}
+          onEditProfile={onEditProfile}
+          onLogout={onLogout}
         />
-      </section>
-    </div>
+
+        <div className="profile__content">
+          <div className="profile__header">
+            <h2 className="profile__title">Your items</h2>
+            {onAddNew && (
+              <button type="button" className="profile__add" onClick={onAddNew}>
+                + Add new
+              </button>
+            )}
+          </div>
+
+          {/* clothes grid comes from children */}
+          {children}
+        </div>
+      </div>
+    </section>
   );
-}
+};
 
 export default Profile;

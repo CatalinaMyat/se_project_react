@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import "./ItemModal.css";
 import crossIcon from "../../assets/cross.png";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
+  const currentUser = useContext(CurrentUserContext);
   if (!card) return null;
 
-  const handleDelete = () => {
-    onDeleteItem(card._id);
-  };
+  const isOwn = currentUser && card?.owner === currentUser._id;
+
+  const handleDelete = () => onDeleteItem(card._id);
 
   return (
     <div
@@ -22,13 +25,16 @@ function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
             <h2 className="modal__caption">{card.name}</h2>
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
-          <button
-            onClick={handleDelete}
-            className="modal__delete-btn"
-            type="button"
-          >
-            Delete
-          </button>
+
+          {isOwn && (
+            <button
+              onClick={handleDelete}
+              className="modal__delete-btn"
+              type="button"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </div>

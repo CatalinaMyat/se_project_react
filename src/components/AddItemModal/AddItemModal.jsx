@@ -14,16 +14,19 @@ export default function AddItemModal({
     weather: "",
   });
 
-  // Reset the form when the modal opens
   useEffect(() => {
-    if (isOpen) {
-      reset({ name: "", imageUrl: "", weather: "" });
-    }
+    if (isOpen) reset({ name: "", imageUrl: "", weather: "" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
+  const isReady =
+    values.name.trim().length > 0 &&
+    values.imageUrl.trim().length > 0 &&
+    values.weather.trim().length > 0;
+
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isReady) return;
     onAddItemModalSubmit({
       name: values.name,
       imageUrl: values.imageUrl,
@@ -39,6 +42,8 @@ export default function AddItemModal({
       onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      isSubmitDisabled={!isReady} // <-- keep button at 50% until valid
+      contentClass="modal__content--add-garment" // <-- 496×436 size & padding
     >
       <label className="modal__label" htmlFor="name">
         Name*
@@ -82,7 +87,7 @@ export default function AddItemModal({
             checked={values.weather === "hot"}
             onChange={handleChange}
           />
-          Hot
+          <span className="modal__radio-text">Hot</span>
         </label>
 
         <label className="modal__radio">
@@ -95,7 +100,7 @@ export default function AddItemModal({
             checked={values.weather === "warm"}
             onChange={handleChange}
           />
-          Warm
+          <span className="modal__radio-text">Warm</span>
         </label>
 
         <label className="modal__radio">
@@ -108,7 +113,7 @@ export default function AddItemModal({
             checked={values.weather === "cold"}
             onChange={handleChange}
           />
-          Cold
+          <span className="modal__radio-text">Cold</span>
         </label>
       </fieldset>
     </ModalWithForm>

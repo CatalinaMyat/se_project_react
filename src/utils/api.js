@@ -1,23 +1,48 @@
-const baseUrl = "http://localhost:3001";
+// src/utils/api.js
+import { BASE_URL } from "./constants";
 
-export const checkResponse = (res) =>
-  res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+const check = (res) => (res.ok ? res.json() : Promise.reject(res));
 
-export const request = (url, options) =>
-  fetch(url, options).then(checkResponse);
+export const getItems = () => fetch(`${BASE_URL}/items`).then(check);
 
-export function getItems() {
-  return request(`${baseUrl}/items?_sort=_id&_order=desc`);
-}
-
-export function addItem({ name, imageUrl, weather }) {
-  return request(`${baseUrl}/items`, {
+export const addItem = (data, token) =>
+  fetch(`${BASE_URL}/items`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, imageUrl, weather }),
-  });
-}
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(data),
+  }).then(check);
 
-export function deleteItem(id) {
-  return request(`${baseUrl}/items/${id}`, { method: "DELETE" });
-}
+export const deleteItem = (id, token) =>
+  fetch(`${BASE_URL}/items/${id}`, {
+    method: "DELETE",
+    headers: {
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
+  }).then(check);
+
+// 👇 NEW: used by your App.jsx
+export const updateUser = (data, token) =>
+  fetch(`${BASE_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  }).then(check);
+
+// src/utils/api.js
+export const addCardLike = (id, token) =>
+  fetch(`${BASE_URL}/items/${id}/likes`, {
+    method: "PUT",
+    headers: { authorization: `Bearer ${token}` },
+  }).then(check);
+
+export const removeCardLike = (id, token) =>
+  fetch(`${BASE_URL}/items/${id}/likes`, {
+    method: "DELETE",
+    headers: { authorization: `Bearer ${token}` },
+  }).then(check);

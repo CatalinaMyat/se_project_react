@@ -1,0 +1,114 @@
+/* overlay */
+.edit-profile__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+/* panel — EXACT 496 x 304 including padding */
+.edit-profile {
+  width: 496px;
+  height: 304px; /* fixed height per spec */
+  box-sizing: border-box; /* include padding in 496x304 */
+  padding: 30px; /* matches figma feel */
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+  position: relative;
+  font-family: "Cabinet Grotesk", system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* title */
+.edit-profile__title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
+  margin: 0 0 16px;
+}
+
+/* form layout */
+.edit-profile__form {
+  display: grid;
+  row-gap: 16px;
+  width: 440px;
+}
+
+/* label + input row */
+.edit-profile__label {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0);
+  display: block;
+  margin: 0 0 4px;
+}
+
+.edit-profile__input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0); /* 30% black like figma */
+  padding: 12px 0 8px;
+  font-size: 16px;
+  line-height: 20px;
+  outline: none;
+}
+
+/* Save changes button: exactly 128 x 36 and left aligned */
+.edit-profile__submit {
+  display: inline-block;
+  width: 128px;
+  height: 36px;
+  padding: 0; /* keep the box exactly 128x36 */
+  line-height: 36px; /* vertical centering */
+  border-radius: 4px; /* matches Figma */
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+
+  /* Stop CSS Grid from stretching it full width */
+  justify-self: start;
+  align-self: start;
+}
+
+/* Close button — true 20x20 and cross fills the box */
+.edit-profile__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* use a 20x20 inline SVG as background so it ALWAYS fills */
+.edit-profile__close::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  /* 30% black cross to match figma */
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\
+<path d='M5 5 L15 15 M15 5 L5 15' stroke='black' stroke-opacity='.3' stroke-width='2' stroke-linecap='round'/>\
+</svg>");
+}
+
+.edit-profile__close:hover::before {
+  /* slight emphasis on hover (optional) */
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\
+<path d='M5 5 L15 15 M15 5 L5 15' stroke='black' stroke-opacity='.6' stroke-width='2' stroke-linecap='round'/>\
+</svg>");
+}

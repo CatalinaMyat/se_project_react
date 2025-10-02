@@ -1,0 +1,88 @@
+/* --- AddItemModal.css --- */
+
+/* SIZE: exactly like Figma (496 × 436) */
+.modal__content--add-garment {
+  width: 496px;
+  min-height: 436px; /* lets content breathe but caps to spec visually */
+  border-radius: 20px;
+  padding: 24px;
+  background: #fff;
+}
+
+/* AddItemModal.css */
+.modal__fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* stick content to the top */
+  align-items: flex-start;
+  gap: 10px;
+
+  /* reset UA styles that draw the faint box */
+  margin: 0;
+  padding: 0;
+  border: 0; /* <-- removes the groove border */
+  border-image: initial;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Legend */
+.modal__legend {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 0 0 4px 0;
+  padding: 0 2px;
+  color: #000;
+}
+
+/* Radio rows */
+.modal__radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+/* Unselected label text = 50% (Figma) */
+.modal__radio-text {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Selected label text = 100% */
+.modal__radio-input:checked + .modal__radio-text {
+  color: #000;
+}
+
+/* Custom radio 20×20 with inner dot */
+.modal__radio-input {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+}
+
+.modal__radio-input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 4px; /* 12px inner dot */
+  background: #000;
+  border-radius: 50%;
+}
+
+/* Accessibility focus ring */
+.modal__radio-input:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+/* Submit button disabled visuals (50% opacity + no pointer) */
+.modal__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

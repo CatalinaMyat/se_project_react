@@ -1,3 +1,15 @@
+/* make sure the modal sits above every card decoration */
+.modal {
+  position: fixed; /* already likely true */
+  inset: 0; /* already likely true */
+  z-index: 1000; /* <-- raise above cards */
+}
+
+.modal__content {
+  position: relative; /* keep the close button inside this stacking context */
+  z-index: 1001; /* content above the dim overlay */
+}
+
 .modal__content_type_image {
   width: 498px;
   height: 610px;

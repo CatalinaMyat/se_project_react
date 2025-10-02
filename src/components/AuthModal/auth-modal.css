@@ -1,0 +1,128 @@
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-family: "Cabinet Grotesk", system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+}
+
+/* Modal card */
+.auth-form {
+  width: 420px;
+  max-width: 92vw;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.auth-form__title {
+  margin: 0 0 20px;
+  font-size: 16px;
+}
+
+/* Fields */
+.auth-form__field {
+  display: block;
+  margin: 16px 0;
+}
+.auth-form__label {
+  display: block;
+  font-size: 16px;
+  color: #000;
+  font-style: bold;
+}
+.auth-form__input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0;
+  outline: none;
+}
+.auth-form__input:focus {
+  border-bottom-color: #111;
+}
+
+/* Error + actions */
+.auth-form__error {
+  color: #d11;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.auth-form__actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start; /* was flex-end */
+  align-items: center;
+}
+.auth-form__submit {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #111;
+  color: #fff;
+}
+
+/* Keep the CTA semi-transparent until the form is valid */
+.auth-form__submit:disabled,
+.auth-form__submit[disabled] {
+  opacity: 0.3; /* matches the 30% spec */
+  cursor: not-allowed; /* visual affordance */
+  pointer-events: none; /* no accidental clicks */
+}
+
+.auth-form__link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Close button — true 20x20 and the cross always fills it */
+.auth-form .auth-modal__close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  /* hide the fallback "×" text visually but keep the button box */
+  font-size: 0;
+}
+
+/* use a 20x20 inline SVG as the icon */
+.auth-form .auth-modal__close-btn::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  /* 30% black cross to match Figma */
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\
+<path d='M5 5 L15 15 M15 5 L5 15' stroke='black' stroke-opacity='.3' stroke-width='2' stroke-linecap='round'/>\
+</svg>");
+}
+
+.auth-form .auth-modal__close-btn:hover::before,
+.auth-form .auth-modal__close-btn:focus-visible::before {
+  /* slight emphasis on hover/focus (optional) */
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\
+<path d='M5 5 L15 15 M15 5 L5 15' stroke='black' stroke-opacity='.6' stroke-width='2' stroke-linecap='round'/>\
+</svg>");
+}

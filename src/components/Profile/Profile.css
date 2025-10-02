@@ -1,29 +1,51 @@
+/* Page layout */
 .profile {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 32px 56px;
+}
+
+.profile__grid {
   display: grid;
-  grid-template-columns: 256px 1fr;
-  column-gap: 24px;
+  grid-template-columns: 229px 1fr; /* sidebar + content */
+  gap: 40px;
   align-items: start;
 }
 
-.profile__sidebar {
-  width: 256px;
-}
-
-.profile__clothing-items {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 0;
-}
-
-.clothes-section > div {
+/* Header row (“Your items” + “+ Add new”) */
+/* Row that holds "Your items" and "+ Add new" */
+.profile__header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-start; /* override space-between if present */
+  gap: 16px; /* space between title and the button */
 }
 
-@media (max-width: 768px) {
-  .profile__sidebar {
-    width: 100%;
-  }
+/* prevent the title from pushing the button to the right */
+.profile__title {
+  margin: 0;
+  font-size: 20px;
 }
+
+/* "+ Add new" style (Figma: 20px, 700, 60% black) */
+.profile__add {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  margin-left: 0; /* in case it was set elsewhere */
+}
+
+.profile__add:hover,
+.profile__add:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.profile__content {
+  min-width: 0;
+} /* prevent overflow */

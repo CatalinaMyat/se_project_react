@@ -4,7 +4,7 @@
 
 .page__content {
   max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: 32px auto 0; /* top margin = 32px */
+  padding: 0 40px;
   font-family: "Cabinet Grotesk", sans-serif;
 }

@@ -1,4 +1,7 @@
-import { request } from "./api";
+const request = (url, options) =>
+  fetch(url, options).then((res) =>
+    res.ok ? res.json() : Promise.reject(res)
+  );
 
 export const getWeather = ({ latitude, longitude }, APIkey) => {
   const url =

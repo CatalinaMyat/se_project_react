@@ -1,39 +1,74 @@
+/* Sidebar card (Figma: 229 × 138, 1px border, 50% black) */
 .sidebar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 12px;
+  /* border: 1px solid rgba(0, 0, 0, 0.5);  ← remove the stroke */
+  border: none; /* hides the border */
+  border-radius: 8px;
+  padding: 16px;
+  background: #fff;
+}
 
-  position: sticky;
-  top: 24px;
+/* Avatar + name row */
+.sidebar__user {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  column-gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .sidebar__avatar {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
+  background: #eee;
 }
 
-.sidebar__username {
-  margin: 0;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 1.2;
-  color: #222;
+.sidebar__initial {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #fff;
+  font-weight: 700;
 }
 
-.sidebar:hover {
-  border-color: #d6d6d6;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+.sidebar__name {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 700;
+  color: #000;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    position: static;
-  }
+/* Links */
+/* Links / actions */
+.sidebar__link {
+  display: block;
+  width: max-content;
+  margin-top: 12px;
+
+  /* Figma: 20px, bold, black */
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 700;
+  color: #000;
+
+  /* look like text, not buttons */
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sidebar__link:hover {
+  opacity: 0.6;
+}
+.sidebar__link:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
 }
