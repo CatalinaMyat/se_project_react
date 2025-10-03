@@ -1,5 +1,4 @@
 import "./ModalWithForm.css";
-import crossIcon from "../../assets/cross.png";
 
 function ModalWithForm({
   children,

@@ -6,7 +6,6 @@ import { coordinates, apiKey } from "../../utils/constants";
 
 import Header from "../Header/Header";
 import Main from "../Main/Main";
-import ClothesSection from "../ClothesSection/ClothesSection";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
@@ -100,13 +99,17 @@ function App() {
     }
 
     return addItem({ name, imageUrl, weather }, token)
-      .then((created) => {
+      .then((res) => {
+        const created = res?.data ?? res;
+
         const normalized = {
           _id: created._id,
           name: created.name,
           link: created.imageUrl,
+          weather: created.weather ?? weather,
           owner: created.owner,
         };
+
         setClothingItems((prev) => [normalized, ...prev]);
         closeActiveModal();
       })

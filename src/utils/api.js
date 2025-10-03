@@ -1,4 +1,3 @@
-// src/utils/api.js
 import { BASE_URL } from "./constants";
 
 const check = (res) => (res.ok ? res.json() : Promise.reject(res));
@@ -23,7 +22,6 @@ export const deleteItem = (id, token) =>
     },
   }).then(check);
 
-// 👇 NEW: used by your App.jsx
 export const updateUser = (data, token) =>
   fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
@@ -34,7 +32,6 @@ export const updateUser = (data, token) =>
     body: JSON.stringify(data),
   }).then(check);
 
-// src/utils/api.js
 export const addCardLike = (id, token) =>
   fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./EditProfileModal.css";
 
 export default function EditProfileModal({
@@ -67,7 +67,7 @@ export default function EditProfileModal({
           </label>
 
           {errorText ? (
-            <div style={{ color: "#d00", fontSize: 12 }}>{errorText}</div>
+            <div className="edit-profile__error">{errorText}</div>
           ) : null}
 
           <button className="edit-profile__submit" disabled={isSubmitting}>
