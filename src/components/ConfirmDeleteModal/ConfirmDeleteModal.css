@@ -1,0 +1,99 @@
+/* ConfirmDeleteModal.css */
+.modal__content_type_confirm {
+  width: 670px;
+  height: 280px;
+  max-width: 670px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
+
+  /* center on the viewport */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  /* content layout (unchanged) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 32px;
+  z-index: 1001; /* keep above overlay if you use one */
+}
+
+/* (optional) small screens */
+@media (max-width: 720px) {
+  .modal__content_type_confirm {
+    width: calc(100vw - 32px);
+    height: auto;
+    min-height: 240px;
+  }
+}
+
+.modal__content.modal__content_type_confirm {
+  max-width: 670px;
+}
+
+/* Typography per Figma (Cabinet Grotesk / 20px / bold) */
+.confirm__title,
+.confirm__subtitle,
+.confirm__delete,
+.confirm__cancel {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000;
+  margin: 0;
+  text-align: center;
+}
+
+.confirm__subtitle {
+  opacity: 0.9;
+  margin-top: -6px; /* tightens spacing like the mock */
+}
+
+.confirm__delete {
+  background: none;
+  border: none;
+  color: #ff4d00; /* Figma: #FF4D00 */
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.confirm__cancel {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* keep your existing .modal__content_type_confirm styles */
+
+/* match ItemModal's close button placement + stacking */
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 2; /* ensure it's above the content */
+}
+
+/* make the white icon visible on white background */
+.modal__close-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  filter: brightness(0) saturate(100%); /* turns the white glyph dark */
+  opacity: 0.3;
+}
+
+.modal__close:hover .modal__close-icon {
+  opacity: 1;
+}

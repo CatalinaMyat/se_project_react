@@ -9,7 +9,11 @@ function ItemCard({ item, onCardClick, onCardLike }) {
 
   const likedByMe =
     Array.isArray(item.likes) &&
-    item.likes.some((id) => id === currentUser?._id);
+    item.likes.some((entry) => {
+      const likeId =
+        entry && typeof entry === "object" ? entry._id || entry.id : entry;
+      return String(likeId) === String(currentUser?._id);
+    });
 
   const handleLike = (e) => {
     e.stopPropagation();

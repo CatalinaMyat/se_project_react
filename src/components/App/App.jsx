@@ -29,6 +29,7 @@ import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
 function App() {
   // ===== Weather =====
@@ -66,24 +67,53 @@ function App() {
   const [authError, setAuthError] = useState("");
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const [updateUserError, setUpdateUserError] = useState("");
+  const [pendingDeleteId, setPendingDeleteId] = useState(null);
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
   };
 
+  const unwrap = (x) => (x && x.data ? x.data : x);
+
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
-    const likeRequest = isLiked ? removeCardLike : addCardLike;
 
-    likeRequest(id, token)
-      .then((updatedCard) => {
-        if (!updatedCard || !updatedCard._id) return;
-        setClothingItems((prev) =>
-          prev.map((item) => (item._id === id ? updatedCard : item))
-        );
-      })
-      .catch(console.error);
+    const mergeNormalized = (prevItem, apiCard) => ({
+      ...prevItem,
+
+      ...apiCard,
+
+      link: apiCard.imageUrl ?? prevItem.link,
+      weather: apiCard.weather ?? prevItem.weather,
+      likes: Array.isArray(apiCard.likes)
+        ? apiCard.likes
+        : Array.isArray(prevItem.likes)
+        ? prevItem.likes
+        : [],
+    });
+
+    !isLiked
+      ? addCardLike(id, token)
+          .then((updatedCard) => {
+            const apiCard = unwrap(updatedCard);
+            setClothingItems((cards) =>
+              cards.map((item) =>
+                item._id === id ? mergeNormalized(item, apiCard) : item
+              )
+            );
+          })
+          .catch((err) => console.log(err))
+      : removeCardLike(id, token)
+          .then((updatedCard) => {
+            const apiCard = unwrap(updatedCard);
+            setClothingItems((cards) =>
+              cards.map((item) =>
+                item._id === id ? mergeNormalized(item, apiCard) : item
+              )
+            );
+          })
+          .catch((err) => console.log(err));
   };
 
   const handleAddClothesClick = () => setActiveModal("add-garment");
@@ -108,6 +138,7 @@ function App() {
           link: created.imageUrl,
           weather: created.weather ?? weather,
           owner: created.owner,
+          likes: [],
         };
 
         setClothingItems((prev) => [normalized, ...prev]);
@@ -131,6 +162,32 @@ function App() {
       .catch((err) => console.error(err));
   };
 
+  const requestDeleteItem = (idFromModal) => {
+    const id = idFromModal || selectedCard?._id;
+    if (!id) return;
+    setPendingDeleteId(id);
+    setActiveModal("confirm-delete");
+  };
+
+  const confirmDeleteItem = () => {
+    const id = pendingDeleteId;
+    if (!id) return;
+    const token = localStorage.getItem("jwt");
+    return deleteItem(id, token)
+      .then(() => {
+        setClothingItems((items) => items.filter((i) => i._id !== id));
+        setActiveModal("");
+        setSelectedCard({});
+        setPendingDeleteId(null);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const cancelDeleteItem = () => {
+    setPendingDeleteId(null);
+    setActiveModal("preview");
+  };
+
   useEffect(() => {
     getWeather(coordinates, apiKey)
       .then((data) => setWeatherData(filterWeatherData(data)))
@@ -141,12 +198,13 @@ function App() {
     getItems()
       .then((data) => {
         const normalized = data.map(
-          ({ _id, name, imageUrl, weather, owner }) => ({
+          ({ _id, name, imageUrl, weather, owner, likes }) => ({
             _id,
             name,
             link: imageUrl,
             weather,
             owner,
+            likes,
           })
         );
         setClothingItems(normalized);
@@ -286,7 +344,13 @@ function App() {
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}
-            onDeleteItem={handleDeleteItem}
+            onDeleteItem={requestDeleteItem}
+          />
+
+          <ConfirmDeleteModal
+            isOpen={activeModal === "confirm-delete"}
+            onConfirm={confirmDeleteItem}
+            onCancel={cancelDeleteItem}
           />
 
           <EditProfileModal
